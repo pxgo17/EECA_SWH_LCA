@@ -1,0 +1,13 @@
+year,scenario,capacity_mw
+2025,Reference,483.6989
+2030,Reference,739.4964
+2035,Reference,882.5429
+2040,Reference,1054.6618
+2045,Reference,1261.9567
+2050,Reference,1511.8377
+2025,Environmental,485.5073
+2030,Environmental,806.9496
+2035,Environmental,1098.031
+2040,Environmental,1499.1366
+2045,Environmental,2052.6706
+2050,Environmental,2817.7987

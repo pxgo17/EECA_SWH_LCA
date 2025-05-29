@@ -1,0 +1,14 @@
+year,scenario,demand_TWh
+2024,Base,41.53
+2025,Reference,41.655
+2030,Reference,46.181
+2035,Reference,50.503
+2040,Reference,55.92
+2045,Reference,59.742
+2050,Reference,62.056
+2025,Environmental,42.503
+2030,Environmental,50.388
+2035,Environmental,57.985
+2040,Environmental,63.38
+2045,Environmental,66.622
+2050,Environmental,68.604

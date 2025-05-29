@@ -1,0 +1,41 @@
+year,capacity_mw,scenario,site_name
+2031,46,Reference,Ng?tamariki expansion
+2047,32,Reference,Ng?wh? Stage 4 (OEC5)
+2037,49,Reference,Kawerau (TOPP2)
+2037,35,Reference,T?heke Geothermal Project
+2024,152,Reference,Tauhara Stage 1
+2033,22,Reference,Tauhara Stage 1 expansion
+2024,51.4,Reference,Te Huka Unit 3
+2034,1.327,Reference,Te Mihi (expansion)
+2035,100.386,Reference,Te Mihi (expansion)
+2036,2.326,Reference,Te Mihi (expansion)
+2037,75.96,Reference,Te Mihi (expansion)
+2034,40,Reference,Wair?kei C & D
+2048,6.711,Reference,Ng?wh? Expansion: Stage 5
+2041,22.716,Reference,Reporoa: Stage 2
+2042,2.284,Reference,Reporoa: Stage 2
+2041,25,Reference,T?heke: Stage 2
+2050,25,Reference,T?heke: Stage 3
+2040,100,Reference,Tokaanu Geothermal (Stage 2)
+2029,46,Environmental,Ng?tamariki expansion
+2039,23.729,Environmental,Ng?wh? Stage 4 (OEC5)
+2033,4.797,Environmental,Kawerau (TOPP2)
+2034,35.943,Environmental,Kawerau (TOPP2)
+2035,8.259,Environmental,Kawerau (TOPP2)
+2035,35,Environmental,T?heke Geothermal Project
+2024,152,Environmental,Tauhara Stage 1
+2030,22,Environmental,Tauhara Stage 1 expansion
+2024,51.4,Environmental,Te Huka Unit 3
+2032,180,Environmental,Te Mihi (expansion)
+2032,40,Environmental,Wair?kei C & D
+2037,25,Environmental,Mangakino generic geothermal
+2038,25,Environmental,Reporoa: Stage 1
+2041,25,Environmental,Reporoa: Stage 2
+2040,1.979,Environmental,T?heke: Stage 2
+2041,23.021,Environmental,T?heke: Stage 2
+2050,25,Environmental,T?heke: Stage 3
+2031,76,Environmental,Tauhara expansion: Stage 2
+2036,30,Environmental,Tauhara expansion: Stage 3
+2032,28.296,Environmental,Tikitere (Stage 1)
+2033,21.704,Environmental,Tikitere (Stage 1)
+2040,100,Environmental,Tokaanu Geothermal (Stage 2)

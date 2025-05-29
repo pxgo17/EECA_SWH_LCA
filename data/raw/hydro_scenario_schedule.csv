@@ -1,0 +1,47 @@
+year,capacity_mw,technology,scenario,site_name
+2031,24.054,Hydro peaking,Reference,Lake P?kaki hydro plant
+2032,10.946,Hydro peaking,Reference,Lake P?kaki hydro plant
+2033,32.598,Hydro run of river,Reference,Clutha River - Beaumont Expansion
+2034,35.918,Hydro run of river,Reference,Clutha River - Beaumont Expansion
+2037,29.431,Hydro peaking,Reference,Arnold Valley hydro
+2037,116.484,Hydro run of river,Reference,Clutha River - Beaumont Expansion
+2037,17,Hydro peaking,Reference,H?wea Gates hydro plant
+2037,72,Hydro run of river,Reference,Wairau Hydro Expansion
+2039,16.569,Hydro peaking,Reference,Arnold Valley hydro
+2040,37.555,Hydro run of river,Reference,Taramakau
+2041,40,Hydro run of river,Reference,M?takitaki River generic hydro plant
+2041,12.445,Hydro run of river,Reference,Taramakau
+2041,30,Hydro run of river,Reference,Whitcombe River
+2042,27.992,Hydro run of river,Reference,Clarence hydro: Waiau Diversions
+2042,24,Hydro run of river,Reference,Ng?kawau hydro scheme
+2043,42.008,Hydro run of river,Reference,Clarence hydro: Waiau Diversions
+2043,15.993,Hydro run of river,Reference,Potts River hydro
+2044,29.433,Hydro run of river,Reference,Bush Stream hydro plant
+2044,19.007,Hydro run of river,Reference,Potts River hydro
+2046,0.567,Hydro run of river,Reference,Bush Stream hydro plant
+2047,20.596,Hydro run of river,Reference,Clutha River - Tuapeka expansion
+2048,73.832,Hydro run of river,Reference,Clutha River - Tuapeka expansion
+2049,65.165,Hydro run of river,Reference,Clutha River - Tuapeka expansion
+2050,4.313,Hydro run of river,Reference,Clutha River - Tuapeka expansion
+2031,17.064,Hydro peaking,Environmental,Arnold Valley hydro
+2033,28.936,Hydro peaking,Environmental,Arnold Valley hydro
+2038,30,Hydro run of river,Environmental,Bush Stream hydro plant
+2036,32.93,Hydro run of river,Environmental,Clarence hydro: Waiau Diversions
+2037,37.07,Hydro run of river,Environmental,Clarence hydro: Waiau Diversions
+2038,41.075,Hydro run of river,Environmental,Clarence hydro: Conway
+2039,49.84,Hydro run of river,Environmental,Clarence hydro: Conway
+2041,15.187,Hydro run of river,Environmental,Clarence hydro: Conway
+2042,20.025,Hydro run of river,Environmental,Clarence hydro: Conway
+2029,28.886,Hydro run of river,Environmental,Clutha River - Beaumont Expansion
+2030,110.079,Hydro run of river,Environmental,Clutha River - Beaumont Expansion
+2031,46.036,Hydro run of river,Environmental,Clutha River - Beaumont Expansion
+2032,17,Hydro peaking,Environmental,H?wea Gates hydro plant
+2029,35,Hydro peaking,Environmental,Lake P?kaki hydro plant
+2035,40,Hydro run of river,Environmental,M?takitaki River generic hydro plant
+2035,7.177,Hydro run of river,Environmental,Ng?kawau hydro scheme
+2036,16.823,Hydro run of river,Environmental,Ng?kawau hydro scheme
+2037,32.634,Hydro run of river,Environmental,Potts River hydro
+2038,2.366,Hydro run of river,Environmental,Potts River hydro
+2035,50,Hydro run of river,Environmental,Taramakau
+2031,72,Hydro run of river,Environmental,Wairau Hydro Expansion
+2035,30,Hydro run of river,Environmental,Whitcombe River

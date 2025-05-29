@@ -1,0 +1,111 @@
+year,capacity_mw,scenario,site_name,weather_area,weather_file
+2025,100,Reference,Kaimai wind farm,CNI1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CNI1.csv
+2027,50,Reference,Pahiatua Wind Farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2027,76.463,Reference,Taranaki Wind (Meridian),TRK1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\TRK1.csv
+2028,195.473,Reference,Taranaki Wind (Meridian),TRK1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\TRK1.csv
+2029,300,Reference,Castle Hill wind farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2029,21.677,Reference,Manawatu Wind (Meridian),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2029,28.064,Reference,Taranaki Wind (Meridian),TRK1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\TRK1.csv
+2030,27.148,Reference,Manawatu Wind (Meridian),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2030,228,Reference,Puketoi wind farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2031,151.174,Reference,Manawatu Wind (Meridian),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2031,38,Reference,Te Rere Hau (Expansion),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2031,0.93,Reference,Generic Wind #75,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2032,71.121,Reference,Generic wind #13,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2032,99.07,Reference,Generic Wind #75,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2033,8.745,Reference,Generic wind #13,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2034,20.134,Reference,Generic wind #13,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2026,55,Reference,Kaiwera Downs wind (Stage 2),STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2034,50,Reference,Generic Wind #32,CNI1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CNI1.csv
+2028,100,Reference,Kaiwera Downs wind (Stage 2),STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2035,8.563,Reference,Generic Wind #24,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2036,146.935,Reference,Generic Wind #24,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2037,167.72,Reference,Generic Wind #18,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2037,144.502,Reference,Generic Wind #24,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2038,73,Reference,Kaiwaikawe,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2038,132.28,Reference,Generic Wind #18,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2038,36.921,Reference,Generic Wind #55,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2039,50,Reference,Generic Wind #21,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2039,104.99,Reference,Generic Wind #55,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2039,13.424,Reference,Generic Wind #62,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2040,31.962,Reference,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2040,61.576,Reference,Generic Wind #62,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2041,64.376,Reference,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2042,92.983,Reference,Hapuakohe Wind Farm,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2042,53.662,Reference,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2042,8.089,Reference,Generic Wind #55,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2043,102.42,Reference,Hapuakohe Wind Farm,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2044,34.597,Reference,Hapuakohe Wind Farm,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2044,124.5,Reference,Te Rere Hau (Repower),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2044,47.663,Reference,Generic Wind #37,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2045,35,Reference,Jericho Wind Farm,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2045,3.927,Reference,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2045,27.337,Reference,Generic Wind #37,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2046,64.071,Reference,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2047,32.038,Reference,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2048,30.213,Reference,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2049,23.493,Reference,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2050,22.195,Reference,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2027,290.262,Environmental,Castle Hill wind farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2028,9.738,Environmental,Castle Hill wind farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2030,86.802,Environmental,Generic wind #13,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2031,13.198,Environmental,Generic wind #13,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2042,73.367,Environmental,Hapuakohe Wind Farm,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2043,118.091,Environmental,Hapuakohe Wind Farm,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2044,38.542,Environmental,Hapuakohe Wind Farm,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2046,35,Environmental,Jericho Wind Farm,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2025,100,Environmental,Kaimai wind farm,CNI1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CNI1.csv
+2036,73,Environmental,Kaiwaikawe,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2026,12.778,Environmental,Kaiwera Downs wind (Stage 2),STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2028,142.222,Environmental,Kaiwera Downs wind (Stage 2),STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2028,200,Environmental,Manawatu Wind (Meridian),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2048,20.075,Environmental,Mount Cass wind farm,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2049,47.051,Environmental,Mount Cass wind farm,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2050,27.474,Environmental,Mount Cass wind farm,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2026,50,Environmental,Pahiatua Wind Farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2050,43.653,Environmental,Project Hurunui Wind Farm,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2028,152.518,Environmental,Puketoi wind farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2029,75.482,Environmental,Puketoi wind farm,MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2026,148.13,Environmental,Taranaki Wind (Meridian),TRK1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\TRK1.csv
+2027,151.87,Environmental,Taranaki Wind (Meridian),TRK1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\TRK1.csv
+2029,38,Environmental,Te Rere Hau (Expansion),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2044,124.5,Environmental,Te Rere Hau (Repower),MWT1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\MWT1.csv
+2034,103.653,Environmental,Generic Wind #18,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2035,196.347,Environmental,Generic Wind #18,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2044,9.896,Environmental,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2045,41.403,Environmental,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2046,14.669,Environmental,Generic Wind #20,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2031,22.261,Environmental,Generic Wind #21,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2033,27.739,Environmental,Generic Wind #21,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2031,300,Environmental,Generic Wind #24,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2036,58.32,Environmental,Generic Wind #25,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2037,41.68,Environmental,Generic Wind #25,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2033,150,Environmental,Generic Wind #29,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2031,8.683,Environmental,Generic Wind #30,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2033,241.317,Environmental,Generic Wind #30,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2031,50,Environmental,Generic Wind #32,CNI1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CNI1.csv
+2034,100,Environmental,Generic Wind #33,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2037,75,Environmental,Generic Wind #37,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2041,35.624,Environmental,Generic Wind #41,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2042,39.376,Environmental,Generic Wind #41,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2032,13.352,Environmental,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2034,59.591,Environmental,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2036,55.944,Environmental,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2040,21.113,Environmental,Generic Wind #43,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2047,58.735,Environmental,Generic Wind #49,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2048,41.265,Environmental,Generic Wind #49,STH2,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\STH2.csv
+2035,129.473,Environmental,Generic Wind #55,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2036,20.527,Environmental,Generic Wind #55,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2038,70.83,Environmental,Generic Wind #57,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2039,70.942,Environmental,Generic Wind #57,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2040,58.228,Environmental,Generic Wind #57,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2033,43.247,Environmental,Generic Wind #62,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2034,31.753,Environmental,Generic Wind #62,CKS1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CKS1.csv
+2029,100,Environmental,Generic Wind #75,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2037,57.397,Environmental,Generic Wind #76,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2038,67.603,Environmental,Generic Wind #76,NTH1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\NTH1.csv
+2040,88.627,Environmental,Generic Wind #80,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2041,46.458,Environmental,Generic Wind #80,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2043,11.766,Environmental,Generic Wind #80,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2045,38,Environmental,Generic Wind #80,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv
+2046,15.149,Environmental,Generic Wind #80,CTY1,C:\\Users\\pxg11\\OneDrive - University of Canterbury\\EECA_LCA_RFP\\energy_model\\wind_scenario_data\\CTY1.csv

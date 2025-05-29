@@ -1,0 +1,37 @@
+year,capacity_mw,scenario,site_name
+2038,84.275,Reference,Generic OCGT peaker: 1 (Huntly)
+2039,15.725,Reference,Generic OCGT peaker: 1 (Huntly)
+2040,61.327,Reference,Generic OCGT peaker: 2 (Stratford)
+2041,38.673,Reference,Generic OCGT peaker: 2 (Stratford)
+2028,15.141,Reference,Generic OCGT peaker: 3 (Otahuhu)
+2029,24.977,Reference,Generic OCGT peaker: 3 (Otahuhu)
+2036,3.407,Reference,Generic OCGT peaker: 3 (Otahuhu)
+2037,56.476,Reference,Generic OCGT peaker: 3 (Otahuhu)
+2037,41.427,Reference,Generic OCGT peaker: 4 (Southdown)
+2038,58.573,Reference,Generic OCGT peaker: 4 (Southdown)
+2032,23.915,Reference,Generic OCGT peaker: 5 (Marsden)
+2033,18.05,Reference,Generic OCGT peaker: 5 (Marsden)
+2036,58.035,Reference,Generic OCGT peaker: 5 (Marsden)
+2039,100,Reference,Generic OCGT peaker: 6 (Huntly)
+2037,100,Reference,Generic OCGT peaker: 7 (Otahuhu)
+2045,87.846,Reference,Generic OCGT peaker: 8 (Huntly)
+2046,12.154,Reference,Generic OCGT peaker: 8 (Huntly)
+2041,45.796,Reference,Waikato Power Plant
+2042,87.754,Reference,Waikato Power Plant
+2043,74.041,Reference,Waikato Power Plant
+2044,61.859,Reference,Waikato Power Plant
+2046,68.44,Reference,Waikato Power Plant
+2047,22.109,Reference,Waikato Power Plant
+2032,15.661,Environmental,Generic OCGT peaker: 1 (Huntly)
+2035,84.339,Environmental,Generic OCGT peaker: 1 (Huntly)
+2036,18.779,Environmental,Generic OCGT peaker: 2 (Stratford)
+2037,20.352,Environmental,Generic OCGT peaker: 2 (Stratford)
+2028,63.236,Environmental,Generic OCGT peaker: 3 (Otahuhu)
+2029,36.764,Environmental,Generic OCGT peaker: 3 (Otahuhu)
+2027,9.794,Environmental,Generic OCGT peaker: 4 (Southdown)
+2029,38.489,Environmental,Generic OCGT peaker: 4 (Southdown)
+2032,51.718,Environmental,Generic OCGT peaker: 4 (Southdown)
+2032,100,Environmental,Generic OCGT peaker: 5 (Marsden)
+2032,73.973,Environmental,Generic OCGT peaker: 6 (Huntly)
+2036,26.027,Environmental,Generic OCGT peaker: 6 (Huntly)
+2035,100,Environmental,Generic OCGT peaker: 7 (Otahuhu)
