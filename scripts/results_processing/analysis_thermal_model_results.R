@@ -104,7 +104,7 @@ technology_lifetime <- technology_year %>%
            R_cap, HP_cap, `Tank_Volume (L)`) %>%
   summarise(kgCO2_oper_life = sum(kgCO2_oper_year),
             P_annual_kWh_life = sum(P_annual_kWh_year),
-            kgCO2_embod_life = kgCO2_embod_year
+            kgCO2_embod_life = sum(kgCO2_embod_year)
             ) %>% ungroup() %>%
   mutate(kgCO2_total_life = kgCO2_oper_life + kgCO2_embod_life)
   
