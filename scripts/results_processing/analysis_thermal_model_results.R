@@ -79,41 +79,35 @@ raw_technologies_processed_full <- raw_technologies_processed_full %>%
 desired_years <- 2025:2045
 
 # Interpolating 'value' for each group (defined by scenario)
-raw_technologies_processed_full_interp <- raw_technologies_processed_full %>% 
+technology_year <- raw_technologies_processed_full %>% 
   mutate(year = as.integer(Grid_year)) %>%
   group_by(house_type,insulation,schedule,Loc_code,Hydro_resource,SH_code,DW_code,Occ_code,
            R_cap, HP_cap, `Tank_Volume (L)`) %>%
   complete(year = desired_years) %>% # creates rows for all years
   arrange(year) %>%
-  mutate(kgCO2_total_year = approx(year, kgCO2, xout = year, rule = 2)$y) %>%
+  mutate(kgCO2_oper_year = approx(year, kgCO2, xout = year, rule = 2)$y) %>%
+  # Note that Embodied are divided over period of analysis (20 years)
+  # to work out annual share
+  mutate(kgCO2_embod_year = approx(year, Embodied/20, xout = year, rule = 2)$y) %>%
   # Electricity energy demand should be constant, average power may change 
   # with control signal
   mutate(P_annual_kWh_year = approx(year, `P_annual (kWh)`, xout = year, rule = 2)$y) %>%
-  mutate(P_avg_peak_kW_year = approx(year, `P_avg_peak (kW)`, xout = year, rule = 2)$y) %>% 
-  ungroup()
+  mutate(P_avg_peak_kW_year = approx(year, `P_avg_peak (kW)`, xout = year, rule = 2)$y) %>%
+  ungroup() 
 
-# Calculate operational emissions over lifespan
-raw_technologies_processed_full_interp_oper <- raw_technologies_processed_full_interp %>% 
+# Please make sure you change to desired directory (latest version was saved in github repo)
+technology_year %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technology_year.csv")
+
+# Calculate operational and embodied emissions over lifespan
+technology_lifetime <- technology_year %>% 
   group_by(house_type,insulation,schedule,Loc_code,Hydro_resource,SH_code,DW_code,Occ_code,
            R_cap, HP_cap, `Tank_Volume (L)`) %>%
-  summarise(kgCO2_op_life = sum(kgCO2_total_year),
-            P_annual_kWh_life = sum(P_annual_kWh_year)) %>% ungroup()
-
-# Want to get only embodied emissions for all scenario combinations            
-raw_technologies_processed_full_interp_embod <- raw_technologies_processed_full_interp %>% 
-  select(house_type,insulation,schedule,Loc_code,
-         Hydro_resource,SH_code,DW_code,Occ_code,
-         R_cap, HP_cap, `Tank_Volume (L)`, Embodied) %>%
-  distinct()
-
-# Merge operational and embodied emissions
-technology_lifetime <- raw_technologies_processed_full_interp_oper %>%
-  left_join(raw_technologies_processed_full_interp_embod, 
-            by = c("house_type","insulation","schedule","Loc_code",
-                   "Hydro_resource","SH_code","DW_code","Occ_code",
-                   "R_cap", "HP_cap", "Tank_Volume (L)")) %>%
-  mutate(kgCO2_total_life = kgCO2_op_life + Embodied) %>%
-  filter(!is.na(Embodied))
+  summarise(kgCO2_oper_life = sum(kgCO2_oper_year),
+            P_annual_kWh_life = sum(P_annual_kWh_year),
+            kgCO2_embod_life = kgCO2_embod_year
+            ) %>% ungroup() %>%
+  mutate(kgCO2_total_life = kgCO2_oper_life + kgCO2_embod_life)
+  
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
 technology_lifetime %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technology_lifetime.csv")
@@ -453,3 +447,27 @@ ggplot(stacked_household_lifetime_plot, aes(x = x_adj, y = value, fill = compone
     panel.spacing = unit(1.5, "lines"),
     strip.background = element_rect(fill = "gray90", color = NA)
   )
+
+# Plot annual technology annual series
+technology_year %>% filter(year >= 2025) %>% 
+  filter(!is.na(SH_code)) %>%
+  group_by(year, SH_code, Loc_code, house_type, insulation) %>%
+  summarize(
+    mean_Operational_year = mean(kgCO2_oper_year, na.rm = TRUE),
+    mean_Embodied_year = mean(kgCO2_embod_year, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  pivot_longer(
+    cols = starts_with("mean_"),
+    names_to = "Metric",
+    values_to = "Value"
+  ) %>% ggplot(aes(x = year, y = Value, fill = Metric)) +
+  geom_col(position = "stack") +
+  facet_grid(Loc_code + SH_code ~ house_type + insulation) +
+  labs(
+    x = "Year",
+    y = "kGCO2e",
+    fill = "Component"
+  ) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
