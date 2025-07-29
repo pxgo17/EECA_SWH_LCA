@@ -5,11 +5,14 @@ library(ggpattern)
 # Read csv file with results for SWH technologies
 # Files can be read from file (commented line or from github)
 # If reading from file, please make sure to change directories accordingly
-#raw_technologies <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technologies.csv")
-raw_technologies <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/thermal/technologies.csv")
+raw_technologies <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technologies_final.csv")
+#raw_technologies <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/thermal/technologies.csv")
 # Files can be read from file (commented line or from github)
 #embodied <- read_csv("C:/Users/pxg11/OneDrive - University of Canterbury/EECA_LCA_RFP/SWH_capacity_processing/embodied.csv")
 embodied <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/lca/embodied.csv")
+
+# Filter control signal - csv's will be generated for each control signal case
+raw_technologies <- raw_technologies %>% filter(CS_code == 'C0')
 
 # Filters by SH_code
 embodied_SH_nonHYD <- embodied %>% filter(SH_code %in% c('R','Rb','Rl','HP','HPl')) %>%
@@ -48,6 +51,7 @@ raw_technologies_processed_full <- raw_technologies_processed_full %>%
   mutate(Embodied = coalesce(Embodied_right, Embodied_left)) %>%
   select(-Embodied_left, -Embodied_right) %>%
   # apply coalesce approach to address HP_cap as well
+  # Note that column name HP_cap was changed (modified from Daniel's version) 
   mutate(HP_cap = coalesce(HP_cap_right, HP_cap_left)) %>%
   select(-HP_cap_left, -HP_cap_right)
 
@@ -96,7 +100,7 @@ technology_year <- raw_technologies_processed_full %>%
   ungroup() 
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
-technology_year %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technology_year.csv")
+technology_year %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technology_year_c0.csv")
 
 # Calculate operational and embodied emissions over lifespan
 technology_lifetime <- technology_year %>% 
@@ -110,7 +114,7 @@ technology_lifetime <- technology_year %>%
   
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
-technology_lifetime %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technology_lifetime.csv")
+technology_lifetime %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technology_lifetime_c0.csv")
 
 ####### COMBINATIONS FOR  development of household dataset  
 # First SH combination for all resistive SH_code ('R')
@@ -168,7 +172,7 @@ raw_technologies_processed_Hydronic <- raw_technologies_processed_full %>%
   filter(SH_code %in% c("HYD1000", "HYD200",  "HYD500")) %>% # Second filter only heat pump (HP)
   select(house_type,insulation,schedule,Loc_code, Grid_year, Hydro_resource,
          SH_code, HP_cap, DW_code, `Tank_Volume (L)`, Occ_code, HP_cap,
-         `P_annual (kWh)`, `Q_annual (kWh)`, kgCO2, `P_avg_peak (kW)`, Embodied) %>%
+         `P_annual (kWh)`, `Q_annual (kWh)`, kgCO2, `P_avg_peak (kW)`, Embodied, CS_code) %>%
   rename(
     P_annual_kWh_total = `P_annual (kWh)`,
     Q_annual_kWh_total = `Q_annual (kWh)`,
@@ -176,7 +180,7 @@ raw_technologies_processed_Hydronic <- raw_technologies_processed_full %>%
     kgCO2_total = kgCO2) %>%
   mutate(scenario = paste(house_type,insulation,schedule,
                           Loc_code,Occ_code, SH_code,
-                          DW_code, 'C0',Grid_year,Hydro_resource, sep = "-"))
+                          DW_code, CS_code,Grid_year,Hydro_resource, sep = "-"))
 
 # Fifth combination is for HP WH,
 # In this case occupancy matters because includes WH
@@ -184,7 +188,7 @@ raw_technologies_processed_WH_HP <- raw_technologies_processed_full %>%
   filter(!is.na(DW_code)) %>% # First filter only water heating (DW)
   filter(DW_code %in% c("HP", "HPo")) %>% # Second filter to leave only HP
   # Embodied is included in grouping variables to keep in final result
-  group_by(Loc_code, Grid_year, Hydro_resource, Occ_code, DW_code, `Tank_Volume (L)`) %>% # Note location included as heat pump performace relies on weather
+  group_by(Loc_code, Grid_year, Hydro_resource, Occ_code, DW_code, `Tank_Volume (L)`, CS_code) %>% # Note location included as heat pump performace relies on weather
   summarise(P_annual_kWh_WH = sum(`P_annual (kWh)`),
             Q_annual_kWh_WH = sum(`Q_annual (kWh)`),
             kgCO2_WH = sum(kgCO2),
@@ -197,7 +201,7 @@ raw_technologies_processed_WH_HP <- raw_technologies_processed_full %>%
 raw_technologies_processed_WH_R <- raw_technologies_processed_full %>%
   filter(!is.na(DW_code)) %>% # First filter only water heating (DW)
   filter(DW_code %in% c("R", "Ro")) %>% # Second filter to leave only HP
-  group_by(Grid_year, Hydro_resource, Occ_code, DW_code, `Tank_Volume (L)`) %>% # Note location not included
+  group_by(Grid_year, Hydro_resource, Occ_code, DW_code, `Tank_Volume (L)`, CS_code) %>% # Note location not included
   summarise(P_annual_kWh_WH = sum(`P_annual (kWh)`),
             Q_annual_kWh_WH = sum(`Q_annual (kWh)`),
             kgCO2_WH = sum(kgCO2),
@@ -221,7 +225,9 @@ household_SH_WH_HP <- raw_technologies_processed_SH %>%
             by = c("Loc_code", "Grid_year", "Hydro_resource")) %>%
   mutate(scenario = paste(house_type,insulation,schedule,
                           Loc_code,Occ_code, SH_code,
-                          DW_code, 'C0',Grid_year,Hydro_resource, sep = "-"))
+                          DW_code, CS_code,Grid_year,Hydro_resource, sep = "-"))
+# Note that there will be missing values for HP_cap or R_cap, depending on SH_code 
+# (i.e. all resisitive will not have HP capacity)
 
 # Join for R WH does not include location attribute in join operation 
 household_SH_WH_R <- raw_technologies_processed_SH %>%
@@ -230,7 +236,7 @@ household_SH_WH_R <- raw_technologies_processed_SH %>%
             by = c("Grid_year", "Hydro_resource")) %>%
   mutate(scenario = paste(house_type,insulation,schedule,
                           Loc_code,Occ_code, SH_code,
-                          DW_code, 'C0',Grid_year,Hydro_resource, sep = "-"))
+                          DW_code, CS_code,Grid_year,Hydro_resource, sep = "-"))
 
 # Merge non-hydronic scenarios 
 non_hydronic_SH_WH_dataframes <- list(household_SH_WH_HP,
@@ -253,7 +259,7 @@ household <- bind_rows(household_dataframes) %>%
 # meaning that only totals are reported.
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
-household %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/households.csv")
+household %>% write_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/households_c0.csv")
 
 # Exploratory plots
 
@@ -286,10 +292,10 @@ household <- household %>% mutate(year = as.integer(Grid_year))
 
 # Interpolating 'value' for each group (defined by scenario)
 household_interp <- household %>%
-  group_by(house_type,insulation,schedule,Loc_code,Hydro_resource,SH_DW_code,Occ_code) %>%
+  group_by(house_type,insulation,schedule,Loc_code,Hydro_resource,SH_DW_code,Occ_code, CS_code) %>%
   complete(year = desired_years) %>% # creates rows for all years
   arrange(year) %>%
-  # These conditions are necesary to take care of hydronic scenarios
+  # These conditions are necessary to take care of hydronic scenarios
   # which do not specify how much is from DWH and SH
   mutate(kgCO2_SH_total_year = if (sum(!is.na(kgCO2_SH)) >=2) {
     approx(year, kgCO2_SH, xout = year, rule = 2)$y
@@ -301,7 +307,11 @@ household_interp <- household %>%
   } else {
     rep(NA_real_, length(year))
   }) %>%
-  mutate(kgCO2_total_year = approx(year, kgCO2_total, xout = year, rule = 2)$y) %>%
+  mutate(kgCO2_total_year = if (sum(!is.na(kgCO2_total)) >=2) {
+    approx(year, kgCO2_total, xout = year, rule = 2)$y
+  } else {
+    rep(NA_real_, length(year))
+  }) %>%
   # Electricity energy demand should be constant, average power may change 
   # with control signal
   mutate(P_annual_kWh_total_year = approx(year, P_annual_kWh_total, xout = year, rule = 2)$y) %>%

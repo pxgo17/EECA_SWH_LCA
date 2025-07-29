@@ -101,7 +101,7 @@ ccgt_id = "1JlsXfMe072h5h5BaIGWvkRShwB0ozdQf"
 url = f"https://drive.google.com/uc?export=download&id={ccgt_id}"
 output = "ccgt_dispatch.pkl"
 gdown.download(url, output, quiet=False)
-coal_model = joblib.load(open(output, "rb"))
+ccgt_model = joblib.load(open(output, "rb"))
 
 ############## Load hydro resource (does not change in all scenarios) 
 resource_hydro_low = pd.read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/raw/hydro_bad.csv")
@@ -593,7 +593,7 @@ def energy_model(scenario, period, hydro_resource):
         
         ##### Diesel power Dispatch ---
         energy_results.loc[i, "unmet_demand"] = unmet_demand
-        # In this case we also check period as coal was expected to be decomissioned
+        # In this case we also check period as diesel was expected to be decomissioned
         # in 2024 but likely before 2030
         if unmet_demand > 0 and period < 2030:
             # min function ensures dispatch does not exceed capacity
