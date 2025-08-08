@@ -288,6 +288,25 @@ raw_technologies_processed_WH_HP <- raw_technologies_processed_CS_DW_SH_HYD %>%
             Other_WH = sum(Other)) %>% 
   ungroup()
 
+test_WH_HP <- raw_technologies_processed_CS_DW_SH_HYD %>%
+  filter(!is.na(DW_code)) %>% # First filter only water heating (DW)
+  filter(DW_code %in% c("HP", "HPo")) 
+
+test_WH_HP_group <- raw_technologies_processed_CS_DW_SH_HYD %>%
+  filter(!is.na(DW_code)) %>% # First filter only water heating (DW)
+  filter(DW_code %in% c("HP", "HPo")) %>%
+  group_by(Loc_code, Grid_year, Hydro_resource, Occ_code, DW_code, `Tank_Volume (L)`, CS_code) %>% # Note location included as heat pump performace relies on weather
+  summarise(P_annual_kWh_WH = sum(`P_annual (kWh)`),
+            Q_annual_kWh_WH = sum(`Q_annual (kWh)`),
+            Operation_WH = sum(kgCO2),
+            P_avg_peak_kW_WH = sum(`P_avg_peak (kW)`),
+            Manufacture_WH = sum(Manufacture),
+            Distribution_WH = sum(Distribution),
+            Installation_WH = sum(Installation),
+            EOL_WH = sum(EOL),
+            Other_WH = sum(Other)) %>% 
+  ungroup()
+
 # Sixth combination is for R WH,
 # In this case occupancy matters because includes WH
 # Location code note required for resistive DWH
@@ -369,7 +388,7 @@ household <- household %>% mutate(year = as.integer(Grid_year))
 
 # Interpolating 'value' for each group (defined by scenario minus year)
 household_interp <- household %>% filter(year > 2024) %>%
-  group_by(house_type,insulation,schedule,Loc_code,Hydro_resource,SH_DW_code,Occ_code, CS_code) %>%
+  group_by(house_type,insulation,schedule,Loc_code,Hydro_resource,SH_DW_code,Occ_code,CS_code) %>%
   complete(year = desired_years) %>% # creates rows for all years
   arrange(year) %>%
   # These conditions are necessary to take care of hydronic scenarios
@@ -462,3 +481,44 @@ household_lifetime_dataframes <- list(household_lifetime_C0,household_lifetime_C
 household_lifetime_Call <- bind_rows(household_lifetime_dataframes) 
 
 household_lifetime_Call %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_Call.csv"))
+
+# Merge datasets for technology lifetime with different control signals
+technology_lifetime_C0 <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_C0.csv") %>%
+  mutate(CS_code = 'C0')
+technology_lifetime_Cpeak <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Cpeak.csv") %>%
+  mutate(CS_code = 'Cpeak')
+technology_lifetime_Crenew <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Crenew.csv") %>%
+  mutate(CS_code = 'Crenew')
+
+# Merge all household_lifetime datasets
+technology_lifetime_dataframes <- list(technology_lifetime_C0,technology_lifetime_Cpeak,technology_lifetime_Crenew)
+technology_lifetime_Call <- bind_rows(technology_lifetime_dataframes) 
+technology_lifetime_Call %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Call.csv"))
+
+
+
+test <- raw_technologies %>% rowwise() %>%
+  mutate(year=as.integer(strsplit(Grid_code,"-")[[1]][1])) %>% 
+  mutate(hydro=strsplit(Grid_code,"-")[[1]][2]) %>% 
+  mutate(house_type=strsplit(Hshld_code,"-")[[1]][1]) %>% 
+  mutate(insulation=strsplit(Hshld_code,"-")[[1]][2]) %>%
+  mutate(schedule=strsplit(Hshld_code,"-")[[1]][3]) %>%
+  filter(SH_code %in% c("HYD200", "HYD500", "HYD1000")) %>% 
+  group_by(house_type,insulation,schedule,Loc_code,SH_code,HP_cap, year, hydro, Occ_code) %>% 
+  summarise(kWh_year = mean(`P_annual (kWh)`), kgCO2 = mean(kgCO2)) %>% ungroup()
+
+test_cap <- test %>% filter(SH_code == "HYD1000", 
+                             year ==2024, 
+                             house_type == 'Mass',
+                             Loc_code == 'AK')
+test %>% 
+  filter(hydro == 'Hhigh') %>% 
+  filter(year == 2024) %>%
+  filter(insulation == 'Nom') %>%
+  filter(schedule == 'Real') %>%
+  ggplot(aes(x=SH_code,y=kgCO2)) +
+  geom_col() + 
+  facet_grid(Loc_code + house_type ~ HP_cap ) +
+  theme_minimal()
+
+
