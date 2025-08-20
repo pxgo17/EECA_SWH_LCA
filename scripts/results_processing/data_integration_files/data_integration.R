@@ -468,6 +468,8 @@ household_lifetime <- household_operation %>%
 # Please make sure you change to desired directory (latest version was saved in github repo)
 household_lifetime %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_",CS,".csv"))
 
+####################### RUN ALL LINES BEFORE THIS CHECKPOINT FIRST FOR EACH CONTROL SIGNAL###############################
+
 # Merge datasets with different control signals
 household_lifetime_C0 <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_C0.csv") %>%
   mutate(CS_code = 'C0')
@@ -495,7 +497,7 @@ technology_lifetime_dataframes <- list(technology_lifetime_C0,technology_lifetim
 technology_lifetime_Call <- bind_rows(technology_lifetime_dataframes) 
 technology_lifetime_Call %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Call.csv"))
 
-
+######################### RUN UP TO HERE AFTER CONTROL SIGNAL SPECIFIC FILES ARE CREATED #################################
 
 test <- raw_technologies %>% rowwise() %>%
   mutate(year=as.integer(strsplit(Grid_code,"-")[[1]][1])) %>% 
