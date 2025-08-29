@@ -35,7 +35,7 @@ raw_technologies_processed <- raw_technologies %>%
 
 # Define current control signal
 
-CS <- "C0"
+CS <- "Crenew"
 
 # Add DW embodied emissions; join only based on DW_code and tank volume
 # as these (capacity technology combinations) will be later added to all house types
@@ -44,7 +44,7 @@ raw_technologies_processed_CS_DW <- raw_technologies_processed %>%
   # Filter control signal - csv's will be generated for each control signal case
   filter(CS_code == CS) %>%
   # Note only three columns are selected before join
-  left_join(embodied_DW %>% select(DW_code,`Tank_Volume (L)`,Manufacture,Distribution,Installation,EOL,Other,EOL_R,Other_R), 
+  left_join(embodied_DW %>% select(DW_code,`Tank_Volume (L)`,Manufacture,Distribution,Installation,EOL,Other,EOL_S,Other_S), 
             by = c("DW_code", "Tank_Volume (L)"))
 
 # Add non hydronic (SH) embodied emissions; join includes multiple attributes
@@ -53,7 +53,7 @@ raw_technologies_processed_CS_DW_SH <- raw_technologies_processed_CS_DW %>%
   # HP_cap in included as original technologies dataset was missing this information for ASHP
   # R_cap is introduced here (missing in technologies dataset)
   left_join(embodied_SH_nonHYD %>% select(house_type,insulation,Loc_code,schedule,SH_code,HP_cap,R_cap,
-                                          Manufacture,Distribution,Installation,EOL,Other,EOL_R,Other_R),
+                                          Manufacture,Distribution,Installation,EOL,Other,EOL_S,Other_S),
             by=c("house_type","insulation","Loc_code","schedule","SH_code"), suffix = c("_left", "_right")) %>%
   # Use coalesce(embodied.y, embodied.x) to prefer the right table’s value when there’s a match, 
   # otherwise keep the left table’s value (left table is technologies dataset which only
@@ -65,14 +65,14 @@ raw_technologies_processed_CS_DW_SH <- raw_technologies_processed_CS_DW %>%
          Installation = coalesce(Installation_right, Installation_left),
          EOL = coalesce(EOL_right, EOL_left),
          Other = coalesce(Other_right, Other_left),
-         EOL_R = coalesce(EOL_R_right, EOL_R_left),
-         Other_R = coalesce(Other_R_right, Other_R_left),
+         EOL_S = coalesce(EOL_S_right, EOL_S_left),
+         Other_S = coalesce(Other_S_right, Other_S_left),
          ) %>%
   select(-HP_cap_right, -HP_cap_left, -Manufacture_right,-Manufacture_left,
          -Distribution_right, -Distribution_left, -Installation_right,
          -Installation_left, -EOL_right, -EOL_left, -Other_right,
-         -Other_left, -EOL_R_right, -EOL_R_left, -Other_R_right,
-         -Other_R_left) %>% 
+         -Other_left, -EOL_S_right, -EOL_S_left, -Other_S_right,
+         -Other_S_left) %>% 
   # Next line is a fix, as some HP_cap have been defined for resistive WH tech
   mutate(R_cap = ifelse(DW_code %in% c('R','Ro'), HP_cap, R_cap),
          HP_cap = ifelse(DW_code %in% c('R','Ro'), NA, HP_cap))
@@ -89,7 +89,7 @@ raw_technologies_processed_CS_DW_SH <- raw_technologies_processed_CS_DW %>%
 raw_technologies_processed_CS_DW_SH_HYD <- raw_technologies_processed_CS_DW_SH %>%
   left_join(embodied_SH_HYD %>% select(house_type,insulation,Loc_code,SH_code,HP_cap,
                                        Manufacture,Distribution,Installation,EOL,Other,
-                                       EOL_R, Other_R,
+                                       EOL_S, Other_S,
                                        Hyd_Cap_kW_Adj, Hyd_Manufacture_HP,
                                        Hyd_Manufacture_Tank, Hyd_Manufacture_FC),
             by=c("house_type","insulation","Loc_code","SH_code","HP_cap"), suffix = c("_left", "_right")) %>%
@@ -100,13 +100,13 @@ raw_technologies_processed_CS_DW_SH_HYD <- raw_technologies_processed_CS_DW_SH %
          Installation = coalesce(Installation_right, Installation_left),
          EOL = coalesce(EOL_right, EOL_left),
          Other = coalesce(Other_right, Other_left),
-         EOL_R = coalesce(EOL_R_right, EOL_R_left),
-         Other_R = coalesce(Other_R_right, Other_R_left),) %>%
+         EOL_S = coalesce(EOL_S_right, EOL_S_left),
+         Other_S = coalesce(Other_S_right, Other_S_left),) %>%
   select(-Manufacture_right,-Manufacture_left,
          -Distribution_right, -Distribution_left, -Installation_right,
          -Installation_left, -EOL_right, -EOL_left, -Other_right,
-         -Other_left, -EOL_R_right, -EOL_R_left, -Other_R_right,
-         -Other_R_left)
+         -Other_left, -EOL_S_right, -EOL_S_left, -Other_S_right,
+         -Other_S_left)
 
 ##### On a technology basis, interpolation will be applied to work out
 ##### cumulative energy demand and emissions (a similar approach is later
@@ -131,8 +131,8 @@ technology_year <- raw_technologies_processed_CS_DW_SH_HYD %>% filter(Grid_year>
   mutate(kgCO2_inst_year = approx(year, Installation/21, xout = year, rule = 2)$y) %>%
   mutate(kgCO2_eol_year = approx(year, EOL/21, xout = year, rule = 2)$y) %>%
   mutate(kgCO2_other_year = approx(year, Other/21, xout = year, rule = 2)$y) %>%
-  mutate(kgCO2_eol_R_year = approx(year, EOL_R/21, xout = year, rule = 2)$y) %>%
-  mutate(kgCO2_other_R_year = approx(year, Other_R/21, xout = year, rule = 2)$y) %>%
+  mutate(kgCO2_EOL_S_year = approx(year, EOL_S/21, xout = year, rule = 2)$y) %>%
+  mutate(kgCO2_Other_S_year = approx(year, Other_S/21, xout = year, rule = 2)$y) %>%
   # Electricity energy demand should be constant, average power may change 
   # with control signal
   mutate(P_annual_kWh_year = approx(year, `P_annual (kWh)`, xout = year, rule = 2)$y) %>%
@@ -167,13 +167,13 @@ technology_lifetime <- technology_year %>%
             kgCO2_inst_life = sum(kgCO2_inst_year),
             kgCO2_eol_life = sum(kgCO2_eol_year),
             kgCO2_other_life = sum(kgCO2_other_year),
-            kgCO2_eol_R_life = sum(kgCO2_eol_R_year),
-            kgCO2_other_R_life = sum(kgCO2_other_R_year)
+            kgCO2_EOL_S_life = sum(kgCO2_EOL_S_year),
+            kgCO2_Other_S_life = sum(kgCO2_Other_S_year)
             ) %>% ungroup() %>%
   mutate(kgCO2_total_life = kgCO2_oper_life + kgCO2_manuf_life +
            kgCO2_dist_life + kgCO2_inst_life + kgCO2_eol_life + kgCO2_other_life) %>%
   mutate(kgCO2_total_life_R = kgCO2_oper_life + kgCO2_manuf_life +
-           kgCO2_dist_life + kgCO2_inst_life + kgCO2_eol_R_life + kgCO2_other_R_life)
+           kgCO2_dist_life + kgCO2_inst_life + kgCO2_EOL_S_life + kgCO2_Other_S_life)
   
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
@@ -193,8 +193,8 @@ if (CS=="C0"){
            Installation = Installation/21,
            EOL= EOL/21,
            Other = Other/21,
-           EOL_R= EOL_R/21,
-           Other_R = Other_R/21
+           EOL_S= EOL_S/21,
+           Other_S = Other_S/21
            )
 }
 
@@ -204,8 +204,8 @@ raw_technologies_processed_CS_DW_SH_HYD <- raw_technologies_processed_CS_DW_SH_H
          Installation = Installation/21,
          EOL= EOL/21,
          Other = Other/21,
-         EOL_R= EOL_R/21,
-         Other_R = Other_R/21)
+         EOL_S= EOL_S/21,
+         Other_S = Other_S/21)
 
 # First SH combination for all resistive SH_code ('R')
 # No grouping required as data is already aggregated
@@ -214,7 +214,7 @@ raw_technologies_processed_SH_R <- raw_technologies_processed_C0_DW_SH_HYD %>%
   filter(SH_code == 'R') %>% # Second filter only resistive (R)
   select(house_type,insulation,schedule,Loc_code, Grid_year, Hydro_resource, SH_code, HP_cap, R_cap,
          `P_annual (kWh)`, `Q_annual (kWh)`, kgCO2, `P_avg_peak (kW)`,
-         Manufacture,Distribution,Installation,EOL,Other) %>%
+         Manufacture,Distribution,Installation,EOL,Other,EOL_S,Other_S) %>%
   rename(
     P_annual_kWh_SH = `P_annual (kWh)`,
     Q_annual_kWh_SH = `Q_annual (kWh)`,
@@ -225,8 +225,8 @@ raw_technologies_processed_SH_R <- raw_technologies_processed_C0_DW_SH_HYD %>%
     Installation_SH = Installation,
     EOL_SH = EOL,
     Other_SH = Other,
-    EOL_R_SH = EOL_R,
-    Other_R_SH = Other_R,
+    EOL_S_SH = EOL_S,
+    Other_S_SH = Other_S,
     )
 
 # Second SH combination for all heat pump
@@ -236,7 +236,7 @@ raw_technologies_processed_SH_HP <- raw_technologies_processed_C0_DW_SH_HYD %>%
   filter(SH_code == 'HP') %>% # Second filter only heat pump (HP)
   select(house_type,insulation,schedule,Loc_code, Grid_year, Hydro_resource, SH_code, HP_cap, R_cap,
          `P_annual (kWh)`, `Q_annual (kWh)`, kgCO2, `P_avg_peak (kW)`,
-         Manufacture,Distribution,Installation,EOL,Other) %>%
+         Manufacture,Distribution,Installation,EOL,Other,EOL_S,Other_S) %>%
   rename(
     P_annual_kWh_SH = `P_annual (kWh)`,
     Q_annual_kWh_SH = `Q_annual (kWh)`,
@@ -247,8 +247,8 @@ raw_technologies_processed_SH_HP <- raw_technologies_processed_C0_DW_SH_HYD %>%
     Installation_SH = Installation,
     EOL_SH = EOL,
     Other_SH = Other,
-    EOL_R_SH = EOL_R,
-    Other_R_SH = Other_R)
+    EOL_S_SH = EOL_S,
+    Other_S_SH = Other_S)
 
 # Third SH combination for Living heat pump, Bedroom Resistive
 # Grouping required (hence SH_code not included in group_by and added at end)
@@ -269,7 +269,9 @@ raw_technologies_processed_SH_HP_R <- raw_technologies_processed_C0_DW_SH_HYD %>
             Distribution_SH = sum(Distribution),
             Installation_SH = sum(Installation),
             EOL_SH = sum(EOL),
-            Other_SH = sum(Other)) %>% 
+            Other_SH = sum(Other),
+            EOL_S_SH = sum(EOL_S),
+            Other_S_SH = sum(Other_S)) %>% 
   ungroup() %>%
   mutate(SH_code = 'HPl_Rb')
 
@@ -284,7 +286,7 @@ raw_technologies_processed_Hydronic <- raw_technologies_processed_CS_DW_SH_HYD %
   select(house_type,insulation,schedule,Loc_code, Grid_year, Hydro_resource,
          SH_code, HP_cap, DW_code, `Tank_Volume (L)`, Occ_code, 
          `P_annual (kWh)`, `Q_annual (kWh)`, kgCO2, `P_avg_peak (kW)`, 
-         Manufacture,Distribution,Installation,EOL,Other, CS_code) %>%
+         Manufacture,Distribution,Installation,EOL,Other,EOL_S,Other_S, CS_code) %>%
   rename(
     P_annual_kWh_total = `P_annual (kWh)`,
     Q_annual_kWh_total = `Q_annual (kWh)`,
@@ -309,7 +311,9 @@ raw_technologies_processed_WH_HP <- raw_technologies_processed_CS_DW_SH_HYD %>%
             Distribution_WH = sum(Distribution),
             Installation_WH = sum(Installation),
             EOL_WH = sum(EOL),
-            Other_WH = sum(Other)) %>% 
+            Other_WH = sum(Other),
+            EOL_S_WH = sum(EOL_S),
+            Other_S_WH = sum(Other_S)) %>% 
   ungroup()
 
 test_WH_HP <- raw_technologies_processed_CS_DW_SH_HYD %>%
@@ -328,7 +332,9 @@ test_WH_HP_group <- raw_technologies_processed_CS_DW_SH_HYD %>%
             Distribution_WH = sum(Distribution),
             Installation_WH = sum(Installation),
             EOL_WH = sum(EOL),
-            Other_WH = sum(Other)) %>% 
+            Other_WH = sum(Other),
+            EOL_S_WH = sum(EOL_S),
+            Other_S_WH = sum(Other_S)) %>% 
   ungroup()
 
 # Sixth combination is for R WH,
@@ -346,7 +352,9 @@ raw_technologies_processed_WH_R <- raw_technologies_processed_CS_DW_SH_HYD %>%
             Distribution_WH = sum(Distribution),
             Installation_WH = sum(Installation),
             EOL_WH = sum(EOL),
-            Other_WH = sum(Other)) %>% 
+            Other_WH = sum(Other),
+            EOL_S_WH = sum(EOL_S),
+            Other_S_WH = sum(Other_S)) %>% 
   ungroup()
 
 # Build table for non-hydronic combinations with HP WH
@@ -392,7 +400,9 @@ household_SH_WH <- bind_rows(non_hydronic_SH_WH_dataframes) %>%
          Distribution = Distribution_SH + Distribution_WH,
          Installation = Installation_SH + Installation_WH,
          EOL = EOL_SH + EOL_WH,
-         Other = Other_SH + Other_WH)
+         Other = Other_SH + Other_WH,
+         EOL_S = EOL_S_SH + EOL_S_WH,
+         Other_S = Other_S_SH + Other_S_WH)
 
 # Merge all
 household_dataframes <- list(household_SH_WH,raw_technologies_processed_Hydronic)
@@ -462,22 +472,30 @@ household_embodied <- household %>%
          Distribution_SH, Distribution_WH, Distribution,
          Installation_SH, Installation_WH, Installation,
          EOL_SH, EOL_WH, EOL,
-         Other_SH, Other_WH, Other) %>%
+         Other_SH, Other_WH, Other,
+         EOL_S_SH, EOL_S_WH, EOL_S,
+         Other_S_SH, Other_S_WH, Other_S) %>%
   mutate(Manufacture_SH = Manufacture_SH*21,
          Distribution_SH = Distribution_SH*21,
          Installation_SH = Installation_SH*21,
          EOL_SH= EOL_SH*21,
          Other_SH = Other_SH*21,
+         EOL_S_SH= EOL_S_SH*21,
+         Other_S_SH = Other_S_SH*21,
          Manufacture_WH = Manufacture_WH*21,
          Distribution_WH = Distribution_WH*21,
          Installation_WH = Installation_WH*21,
          EOL_WH= EOL_WH*21,
          Other_WH = Other_WH*21,
+         EOL_S_WH= EOL_S_WH*21,
+         Other_S_WH = Other_S_WH*21,
          Manufacture = Manufacture*21,
          Distribution = Distribution*21,
          Installation = Installation*21,
          EOL= EOL*21,
-         Other = Other*21) %>%
+         Other = Other*21,
+         EOL_S= EOL_S*21,
+         Other_S = Other_S*21) %>%
   distinct()
 
 # Merge operational and embodied emissions
@@ -487,7 +505,9 @@ household_lifetime <- household_operation %>%
                    "Loc_code",
                    "SH_DW_code","Occ_code")) %>%
   mutate(Embodied_life = Manufacture + Distribution + Installation + EOL + Other,
-         Total_life = Operation_life + Embodied_life)
+         Total_life = Operation_life + Embodied_life,
+         Embodied_life_R = Manufacture + Distribution + Installation + EOL_S + Other_S,
+         Total_life_R = Operation_life + Embodied_life_R)
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
 household_lifetime %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_",CS,".csv"))

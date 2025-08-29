@@ -10,11 +10,11 @@ unique_values <- function(column){
 # Read csv file with results for SWH technologies
 # Files can be read from file (commented line or from github)
 # If reading from file, please make sure to change directories accordingly
-raw_technologies <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technologies_finalv2.csv")
+raw_technologies <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/thermal/technologies_env.csv")
 #raw_technologies <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/thermal/technologies.csv")
 # Files can be read from file (commented line or from github)
 embodied <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/embodied_all.csv")
-#embodied <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/lca/embodied.csv")
+# embodied <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/lca/embodied.csv")
 
 # Filters by SH_code
 embodied_SH_nonHYD <- embodied %>% filter(SH_code %in% c('R','Rb','Rl','HP','HPl')) %>%
@@ -29,20 +29,22 @@ raw_technologies_processed <- raw_technologies %>%
   separate(col = Hshld_code, # Column to split
            into = c("house_type", "insulation", "schedule"), # New column names
            sep = "-") %>% # Separator character
+  mutate(Grid_code = str_replace_all(Grid_code, "_", "-")) %>% # some observations have "-" separators
   separate(col = Grid_code, # Column to split
            into = c("Grid_year", "Hydro_resource"), # New column names
            sep = "-") 
+  
 
-# Define current control signal
+# Define current control signal - Only C0 for environmental scenario results
 
-CS <- "Crenew"
+CS <- "C0"
 
 # Add DW embodied emissions; join only based on DW_code and tank volume
 # as these (capacity technology combinations) will be later added to all house types
 # Note that domestic water and hydronic cases have control signal dependency
 raw_technologies_processed_CS_DW <- raw_technologies_processed %>%
   # Filter control signal - csv's will be generated for each control signal case
-  filter(CS_code == CS) %>%
+  mutate(CS_code = CS) %>%
   # Note only three columns are selected before join
   left_join(embodied_DW %>% select(DW_code,`Tank_Volume (L)`,Manufacture,Distribution,Installation,EOL,Other), 
             by = c("DW_code", "Tank_Volume (L)"))
@@ -104,6 +106,8 @@ raw_technologies_processed_CS_DW_SH_HYD <- raw_technologies_processed_CS_DW_SH %
 ##### cumulative energy demand and emissions (a similar approach is later
 ##### implemented on a household basis)
 
+
+
 # Set up the years you want to interpolate for
 # Same period applies for household interpolation
 desired_years <- 2025:2045
@@ -129,8 +133,9 @@ technology_year <- raw_technologies_processed_CS_DW_SH_HYD %>% filter(Grid_year>
   mutate(P_avg_peak_kW_year = approx(year, `P_avg_peak (kW)`, xout = year, rule = 2)$y) %>%
   ungroup() 
 
+
 # Please make sure you change to desired directory (latest version was saved in github repo)
-technology_year %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_year_",CS,".csv"))
+technology_year %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_year_env_",CS,".csv"))
 
 ### PLOT POWER
 # technology_year %>% 
@@ -163,7 +168,7 @@ technology_lifetime <- technology_year %>%
   
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
-technology_lifetime %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_",CS,".csv"))
+technology_lifetime %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_env_",CS,".csv"))
 
 ####### COMBINATIONS FOR  development of household dataset  
 # Need to run 'C0' first
@@ -415,7 +420,7 @@ household_interp <- household %>% filter(year > 2024) %>%
   ungroup()
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
-household_interp %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_year_",CS,".csv"))
+household_interp %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_year_env_",CS,".csv"))
 
 
 # Once interpolation allowed to get annual data (instead of 5 year periods)
@@ -466,36 +471,11 @@ household_lifetime <- household_operation %>%
          Total_life = Operation_life + Embodied_life)
 
 # Please make sure you change to desired directory (latest version was saved in github repo)
-household_lifetime %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_",CS,".csv"))
+household_lifetime %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_env_",CS,".csv"))
+
 
 ####################### RUN ALL LINES BEFORE THIS CHECKPOINT FIRST FOR EACH CONTROL SIGNAL###############################
 
-# Merge datasets with different control signals
-household_lifetime_C0 <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_C0.csv") %>%
-  mutate(CS_code = 'C0')
-household_lifetime_Cpeak <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_Cpeak.csv") %>%
-  mutate(CS_code = 'Cpeak')
-household_lifetime_Crenew <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_Crenew.csv") %>%
-  mutate(CS_code = 'Crenew')
-
-# Merge all household_lifetime datasets
-household_lifetime_dataframes <- list(household_lifetime_C0,household_lifetime_Cpeak,household_lifetime_Crenew)
-household_lifetime_Call <- bind_rows(household_lifetime_dataframes) 
-
-household_lifetime_Call %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/household_lifetime_Call.csv"))
-
-# Merge datasets for technology lifetime with different control signals
-technology_lifetime_C0 <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_C0.csv") %>%
-  mutate(CS_code = 'C0')
-technology_lifetime_Cpeak <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Cpeak.csv") %>%
-  mutate(CS_code = 'Cpeak')
-technology_lifetime_Crenew <- read_csv("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Crenew.csv") %>%
-  mutate(CS_code = 'Crenew')
-
-# Merge all household_lifetime datasets
-technology_lifetime_dataframes <- list(technology_lifetime_C0,technology_lifetime_Cpeak,technology_lifetime_Crenew)
-technology_lifetime_Call <- bind_rows(technology_lifetime_dataframes) 
-technology_lifetime_Call %>% write_csv(paste0("D:/EECA_SWH_LCA/EECA_SWH_LCA/EECA_SWH_LCA/data/processed/lca/technology_lifetime_Call.csv"))
 
 ######################### RUN UP TO HERE AFTER CONTROL SIGNAL SPECIFIC FILES ARE CREATED #################################
 
@@ -524,3 +504,73 @@ test %>%
   theme_minimal()
 
 
+##### Verification of interpolation and lifetime aggregation 
+
+### First Space Heating
+
+test_tech_period_SH <- raw_technologies_processed_CS_DW_SH_HYD %>% filter(Grid_year != '2024') %>%
+  mutate(year = as.integer(Grid_year)) %>%
+  filter(house_type == 'Mass',
+         insulation == 'Nom',
+         schedule == 'Real',
+         Loc_code == 'AK',
+         Hydro_resource == 'Hlow',
+         SH_code %in% c('HP', 'HPl', 'Rb')) 
+
+test_tech_period_SH %>% ggplot(aes(x=year, y=kgCO2, color=SH_code)) +
+  geom_line() + geom_point()
+
+test_tech_year_SH <- technology_year %>% 
+  filter(house_type == 'Mass',
+         insulation == 'Nom',
+         schedule == 'Real',
+         Loc_code == 'AK',
+         Hydro_resource == 'Hlow',
+         SH_code %in% c('HP', 'HPl', 'Rb')) 
+
+test_tech_year_SH %>% ggplot(aes(x=year, y=kgCO2_oper_year, color=SH_code)) +
+  geom_line() + geom_point()
+
+test_tech_lifetime_SH <- technology_lifetime %>%
+  filter(house_type == 'Mass',
+         insulation == 'Nom',
+         schedule == 'Real',
+         Loc_code == 'AK',
+         Hydro_resource == 'Hlow',
+         SH_code %in% c('HP', 'HPl', 'Rb'))
+test_tech_lifetime_SH$kgCO2_oper_life
+
+test_house_lifetime <- household_lifetime %>%
+  filter(house_type == 'Mass',
+         insulation == 'Nom',
+         schedule == 'Real',
+         Loc_code == 'AK',
+         Hydro_resource == 'Hlow',
+         SH_DW_code == 'HPl_Rb-R')
+test_house_lifetime$Operation_SH_life
+
+### Second Water Heating
+
+test_tech_period_DW <- raw_technologies_processed_CS_DW_SH_HYD %>% filter(Grid_year != '2024') %>%
+  mutate(year = as.integer(Grid_year)) %>%
+  filter(Hydro_resource == 'Hlow',
+         DW_code %in% c('R')) 
+
+test_tech_period_DW %>% ggplot(aes(x=year, y=kgCO2, color=SH_code)) +
+  geom_line() + geom_point()
+
+test_tech_year_DW <- technology_year %>% 
+  filter(Hydro_resource == 'Hlow',
+         DW_code %in% c('R')) 
+
+test_tech_year_DW %>% ggplot(aes(x=year, y=kgCO2_oper_year, color=SH_code)) +
+  geom_line() + geom_point()
+
+test_tech_lifetime_DW <- technology_lifetime %>%
+  filter(Hydro_resource == 'Hlow',
+         DW_code %in% c('R'))
+
+test_tech_lifetime_DW$kgCO2_oper_life
+
+test_house_lifetime$Operation_WH_life
+test_house_lifetime$Operation_life
