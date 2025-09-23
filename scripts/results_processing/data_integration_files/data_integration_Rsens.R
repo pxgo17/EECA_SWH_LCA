@@ -33,7 +33,7 @@ raw_technologies_processed <- raw_technologies %>%
            into = c("Grid_year", "Hydro_resource"), # New column names
            sep = "-") 
 
-# Define current control signal
+# Define current control signal - Start with 'C0' when re-running for a data update
 
 CS <- "Crenew"
 
