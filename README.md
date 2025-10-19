@@ -4,7 +4,8 @@
 ![Linting](https://github.com/EECA-NZ/eeca-python-template/actions/workflows/pylint.yml/badge.svg)
 [Test Coverage Report](https://eeca-nz.github.io/eeca-python-template/htmlcov)
 
-This repository serves as a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
+This repository is based on a template for Python projects at EECA, including pre-configured GitHub Actions workflows for linting and testing.
+
 
 ## Features
 *   **Code Formatting:** Enforces consistent code style with Black and Isort.
