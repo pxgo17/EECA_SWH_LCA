@@ -1,4 +1,4 @@
-# Supporting excel spreadsheets for EECA SWH LCA embodied emissions 
+# Machine learning models for power dispatch model 
 
 This folder contains pickle (.pkl) python files. These are binary files that contain machine learning models (random forest regressors and classifiers), that are called by the power dispatch model. 
 
