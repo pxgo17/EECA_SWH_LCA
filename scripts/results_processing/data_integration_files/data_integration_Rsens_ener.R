@@ -35,7 +35,7 @@ raw_technologies_processed <- raw_technologies %>%
 
 # Define current control signal - Start with 'C0' when re-running for a data update
 
-CS <- "C0"
+CS <- "Crenew"
 
 # Add DW embodied emissions; join only based on DW_code and tank volume
 # as these (capacity technology combinations) will be later added to all house types
@@ -73,7 +73,7 @@ raw_technologies_processed_CS_DW_SH <- raw_technologies_processed_CS_DW %>%
          Distribution_MJ = coalesce(Distribution_MJ_right, Distribution_MJ_left),
          Installation_MJ = coalesce(Installation_MJ_right, Installation_MJ_left),
          EOL_MJ = coalesce(EOL_MJ_right, EOL_MJ_left),
-         Other_MJ = coalesce(Other_MJ_right, Other_MJ_left),
+         Other_MJ = coalesce(Other_MJ_right, Other_MJ_left)
          ) %>%
   select(-HP_cap_right, -HP_cap_left, -Manufacture_right,-Manufacture_left,
          -Distribution_right, -Distribution_left, -Installation_right,
@@ -160,7 +160,7 @@ technology_year <- raw_technologies_processed_CS_DW_SH_HYD %>% filter(Grid_year>
   mutate(MJ_dist_year = approx(year, Distribution_MJ/21, xout = year, rule = 2)$y) %>%
   mutate(MJ_inst_year = approx(year, Installation_MJ/21, xout = year, rule = 2)$y) %>%
   mutate(MJ_eol_year = approx(year, EOL_MJ/21, xout = year, rule = 2)$y) %>%
-  mutate(MJ_other_year = approx(year, Other_MJ/21, xout = year, rule = 2)$y)
+  mutate(MJ_other_year = approx(year, Other_MJ/21, xout = year, rule = 2)$y) %>%
   # Electricity energy demand should be constant, average power may change 
   # with control signal
   mutate(P_annual_kWh_year = approx(year, `P_annual (kWh)`, xout = year, rule = 2)$y) %>%
@@ -563,7 +563,7 @@ household_embodied <- household %>%
          Distribution_SH_MJ, Distribution_WH_MJ, Distribution_MJ,
          Installation_SH_MJ, Installation_WH_MJ, Installation_MJ,
          EOL_SH_MJ, EOL_WH_MJ, EOL_MJ,
-         Other_SH, Other_WH, Other,) %>%
+         Other_SH_MJ, Other_WH_MJ, Other_MJ) %>%
   mutate(Manufacture_SH = Manufacture_SH*21,
          Distribution_SH = Distribution_SH*21,
          Installation_SH = Installation_SH*21,
@@ -673,4 +673,23 @@ test %>%
   facet_grid(Loc_code + house_type ~ HP_cap ) +
   theme_minimal()
 
+
+household_lifetime_Call_all <- household_lifetime_Call %>% filter(Occ_code == 3) %>%
+  mutate(house_type = ifelse(house_type == 'Mod', 'Large', 'Small')) %>%
+  mutate(insulation = ifelse(insulation == 'Nom', 'Base', insulation)) %>%
+  group_by(Loc_code, house_type, insulation, SH_DW_code, CS_code) %>%
+  summarise(Embodied = mean(Embodied_life),
+            Operation = mean(Operation_life), 
+            Embodied_MJ = mean(Embodied_life_MJ),
+            Operation_MJ = mean(P_annual_kWh_life/0.278),
+            .groups = 'drop') %>% ungroup() %>%
+  mutate(Total_kgCO2e = Embodied + Operation,
+         Total_MJ = Embodied_MJ + Operation_MJ)
+# Read results of reduction in embedded emissions from peak reduction
+peak_power_embedded <- read_csv("https://raw.githubusercontent.com/pxgo17/EECA_SWH_LCA/refs/heads/main/data/processed/lca/aggregate_peak_embedded.csv") %>% 
+  suppressMessages()
+# Reshape data to long format for ggplot2 and join embedded results
+plot_all <- household_lifetime_Call_all %>%
+  pivot_longer(cols = c(Embodied, Operation), names_to = "Type", values_to = "Emissions") %>%
+  left_join(peak_power_embedded,  by = c("SH_DW_code", "Loc_code", "house_type", "insulation", "CS_code")) 
 

@@ -35,7 +35,7 @@ raw_technologies_processed <- raw_technologies %>%
 
 # Define current control signal - Start with 'C0' when re-running for a data update
 
-CS <- "Crenew"
+CS <- "C0"
 
 # Add DW embodied emissions; join only based on DW_code and tank volume
 # as these (capacity technology combinations) will be later added to all house types
